@@ -2,7 +2,33 @@
 
 **Date:** 2026-07-15
 **Branch:** avuz-customization-stable-3.35.0
-**Status:** Approved, pending implementation
+**Status:** SUPERSEDED (2026-08-05) — see correction below
+
+---
+
+## ⚠️ Correction (2026-08-05)
+
+This design rests on two wrong premises and its chosen approach ships a broken app. **Do not implement it.** The actual fix landed instead: repin `androidLibraryVersion` to the git **tag `2.22.2`**.
+
+1. **`827db94…` is not a "raw master commit / snapshot" — it is tag `2.22.2`.**
+   `git ls-remote nextcloud/android-library` → `827db94ca661d39ca7fae5c608eab1282b629b84  refs/tags/2.22.2`. Jitpack keeps *tag* builds permanently; the resolution failure came from pinning by the **commit-hash form** of a tagged commit, which jitpack treats as a snapshot and GC's. Pinning `2.22.2` (the tag name) resolves durably — no in-repo vendoring, no committed 774 KB aar.
+
+2. **`264573e3…` is functionally broken, not "the validated library."**
+   It is a *later* master snapshot whose `DownloadFileRemoteOperation` only overrides `run(NextcloudClient)`. App 3.35.0 calls `execute(OwnCloudClient)` → base `RemoteOperation.run(OwnCloudClient)` throws `UnsupportedOperationException: Not used anymore` → **all file downloads fail**. The shipped APK built on `264573e3` was never download-validated. Tag `2.22.2` overrides `run(OwnCloudClient)` → download works (verified live on emulator, HTTP 200).
+
+**Approach B (repin to a persistent tag), rejected below, was correct** — the rejection optimized for "byte-exact `264573e3`," which was the wrong target because `264573e3` is broken. The one-line fix:
+
+```toml
+androidLibraryVersion = "2.22.2"   # was 827db94… (commit-hash form of the same tag; jitpack GC'd it)
+```
+
+Rule going forward: **pin android-library by tag, never by master-commit hash.** Bump only to a tag whose `DownloadFileRemoteOperation` client (OwnCloudClient vs NextcloudClient) matches the app's download code.
+
+The original design (build-resolution durability, config-cache bug) is preserved below for history.
+
+---
+
+## Original design (historical — superseded)
 
 ## Problem
 
