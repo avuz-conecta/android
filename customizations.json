@@ -179,7 +179,7 @@
         "app/src/main/res/values/dims.xml"
       ],
       "category": "visual",
-      "merge_risk": "verbatim",
+      "merge_risk": "hand-merge",
       "description": "splash_image_size 180dp → 220dp. Bigger logo on first-run intro + login thumbnail.",
       "risk": "low",
       "notes": "Single dimen, shared by whats_new_element.xml and account_setup.xml. Conflict-prone on upstream dims.xml edits.",
@@ -205,7 +205,7 @@
         "app/src/main/res/values/styles.xml"
       ],
       "category": "visual",
-      "merge_risk": "verbatim",
+      "merge_risk": "hand-merge",
       "description": "Style tweaks for Avuz palette consistency. Theme.ownCloud.Launcher: parent → Theme.Material3.Light.NoActionBar (kills inflated AppCompat ActionBar that painted colorPrimary blue band at top). windowActionBar=false, windowNoTitle=true. windowBackground/statusBarColor/navigationBarColor → bg_drawer_header (#f2f6fb white). windowLightStatusBar/Navigation=true. Theme.App.Starting (system splash): mirrored white system bars + windowSplashScreenIconBackgroundColor=white + colorPrimary/Dark overrides for cold-start frame. Result: all-white launch + splash, no blue strips.",
       "risk": "high",
       "notes": "styles.xml is large and upstream-active. Audit each merge for missed updates.",
