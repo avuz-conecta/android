@@ -175,6 +175,7 @@ class FirstRunActivity :
     private fun setupFeaturesViewAdapter() {
         val featuresViewAdapter = FeaturesViewAdapter(this, *firstRun)
         binding.progressIndicator.setNumberOfSteps(featuresViewAdapter.itemCount)
+        binding.progressIndicator.visibility = if (featuresViewAdapter.itemCount > 1) View.VISIBLE else View.GONE
         binding.contentPanel.adapter = featuresViewAdapter
         binding.contentPanel.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
@@ -247,10 +248,7 @@ class FirstRunActivity :
 
         val firstRun: Array<FeatureItem>
             get() = arrayOf(
-                FeatureItem(R.drawable.logo, R.string.first_run_1_text, R.string.empty, true, false),
-                FeatureItem(R.drawable.first_run_files, R.string.first_run_2_text, R.string.empty, true, false),
-                FeatureItem(R.drawable.first_run_groupware, R.string.first_run_3_text, R.string.empty, true, false),
-                FeatureItem(R.drawable.first_run_talk, R.string.first_run_4_text, R.string.empty, true, false)
+                FeatureItem(R.drawable.branded_login_logo, R.string.first_run_1_text, R.string.empty, true, false)
             )
     }
 }

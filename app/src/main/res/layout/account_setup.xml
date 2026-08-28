@@ -30,7 +30,7 @@
             android:layout_height="@dimen/splash_image_size"
             android:layout_marginBottom="@dimen/standard_padding"
             android:contentDescription="@string/app_name"
-            android:src="@drawable/logo" />
+            android:src="@drawable/branded_login_logo" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -139,7 +139,8 @@
                 android:background="@color/transparent"
                 android:contentDescription="@string/scanQR_description"
                 android:src="@drawable/qrcode_scan"
-                android:theme="@style/Button.Login" />
+                android:theme="@style/Button.Login"
+                android:visibility="gone" />
 
         </LinearLayout>
 

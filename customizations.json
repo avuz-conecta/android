@@ -1,0 +1,191 @@
+{
+  "base_version": "3.35.0",
+  "target_version": "3.35.0",
+  "upstream_repo": "nextcloud/android",
+  "upstream_branch": "stable-3.35",
+  "source_branch": "avuz-customization-stable-3.35.0",
+  "app_id": "com.avuz.conecta",
+  "entries": [
+    {
+      "id": "branding-setup-xml",
+      "type": "config",
+      "paths": [
+        "app/src/main/res/values/setup.xml"
+      ],
+      "description": "Central white-label config: app_name 'Avuz Conecta', account_type 'avuzconecta', authority 'com.avuz.conecta', data_folder, db_file/name, user-agent strings. Avuz palette (primary #2bb5e3, primary_dark #1e9bc7, accent #d2e314, bg_splash #f2f6fb). Drawer header dimensions. Privacy URL → avuz.cloud. Splash text 'Avuz Conecta'. is_branded_client=true.",
+      "risk": "low",
+      "notes": "Upstream-supported override file. Most changes here are conflict-free. Watch for new keys added upstream."
+    },
+    {
+      "id": "feature-flags-disabled",
+      "type": "config",
+      "paths": [
+        "app/src/main/res/values/setup.xml"
+      ],
+      "description": "Disabled flags: help_enabled=false, sourcecode_enabled=false, participate_enabled=false (hides Community menu), imprint_enabled=false, logger_enabled=false, show_drawer_logout=false, recently_modified_enabled=false, show_provider_or_own_installation=false (hides 'Sign up with provider' + 'Host your own server' on first-run intro).",
+      "risk": "low",
+      "notes": "show_provider_or_own_installation also affects DrawerActivity add-account flow and UserListAdapter — intended single-flag toggle."
+    },
+    {
+      "id": "android-library-sha-bump",
+      "type": "build",
+      "paths": [
+        "gradle/libs.versions.toml"
+      ],
+      "description": "Bumped androidLibraryVersion 827db94 → 264573e (master HEAD 2026-04-28). Original sha had broken JitPack POM artifact (404 only on .pom, .aar served).",
+      "risk": "medium",
+      "notes": "Forward-bumped from upstream-pinned sha. Revert when upstream pins a new working sha. Watch for nextcloud-android-library API drift on next merge."
+    },
+    {
+      "id": "branding-build-config",
+      "type": "build",
+      "paths": [
+        "app/build.gradle.kts"
+      ],
+      "description": "applicationId 'com.avuz.conecta' (gplay/generic/huawei), 'com.avuz.conecta.beta' (versionDev), 'com.avuz.conecta.qa' (qa). Version 3.35.0.",
+      "risk": "medium",
+      "notes": "Conflict-prone on version bumps. Reapply applicationId after each upstream version merge."
+    },
+    {
+      "id": "notification-icon",
+      "type": "asset",
+      "paths": [
+        "app/src/main/res/drawable/notification_icon.xml"
+      ],
+      "description": "Branded notification icon — 3 Avuz dots vector (monochrome white). Used by foreground service notifications (file upload/download progress, sync, scan-to-pdf). Replaces Nextcloud 3-circles trademark mark.",
+      "risk": "low",
+      "notes": "Android notification small icons must be white-only on transparent bg (system applies tint)."
+    },
+    {
+      "id": "launcher-icons",
+      "type": "asset",
+      "paths": [
+        "app/src/main/res/drawable/ic_launcher_foreground.xml",
+        "app/src/main/res/drawable/ic_launcher_background.xml",
+        "app/src/main/res/drawable/ic_launcher_monochrome.xml",
+        "app/src/main/res/mipmap-anydpi/ic_launcher.xml",
+        "app/src/main/res/mipmap-hdpi/ic_launcher.png",
+        "app/src/main/res/mipmap-mdpi/ic_launcher.png",
+        "app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+        "app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+        "app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+      ],
+      "description": "Avuz launcher icons (3 dots: blue/olive/gray) replacing Nextcloud trademark mark. Adaptive icon (foreground + background + monochrome for Android 13+). Legacy raster fallbacks per density.",
+      "risk": "low",
+      "notes": "Source PNGs in /assets/ (icon.png). Regenerate via Image Asset Studio if dimensions change."
+    },
+    {
+      "id": "splash-screen",
+      "type": "asset",
+      "paths": [
+        "app/src/main/res/layout/activity_splash.xml",
+        "app/src/main/res/drawable/branded_splash_logo.xml",
+        "app/src/main/res/drawable-xxxhdpi/avuz_splash_logo.png"
+      ],
+      "description": "Splash screen with Avuz logo. branded_splash_logo.xml is alias → avuz_splash_logo PNG. Layout uses setup.xml dimensions and bg_splash color.",
+      "risk": "medium",
+      "notes": "activity_splash.xml is upstream layout — watch for structural changes. Alias pattern isolates asset swap."
+    },
+    {
+      "id": "drawer-header",
+      "type": "asset",
+      "paths": [
+        "app/src/main/res/layout/drawer_header.xml",
+        "app/src/main/res/drawable/branded_drawer_logo.xml",
+        "app/src/main/res/drawable-xxxhdpi/avuz_drawer_logo.png"
+      ],
+      "description": "Drawer header logo + sizing. Alias pattern (branded_drawer_logo) → avuz_drawer_logo PNG. Layout pulls dimensions/colors from setup.xml.",
+      "risk": "medium",
+      "notes": "drawer_header.xml conflicts possible if upstream restructures header. Bindings use setup.xml refs to minimize surface."
+    },
+    {
+      "id": "login-logo",
+      "type": "asset",
+      "paths": [
+        "app/src/main/res/drawable/branded_login_logo.xml",
+        "app/src/main/res/drawable-xxxhdpi/avuz_logo.png",
+        "app/src/main/res/layout/account_setup.xml",
+        "app/src/main/res/layout/deep_link_login.xml",
+        "app/src/main/res/layout/activity_preview_media.xml",
+        "app/src/main/java/com/nextcloud/client/onboarding/FirstRunActivity.kt"
+      ],
+      "description": "Replace Nextcloud trademark logo with Avuz wordmark on login + first-run + deep-link + media preview placeholder. branded_login_logo.xml = bitmap wrapper applying android:tint=@android:color/white over avuz_logo.png. Layouts swap @drawable/logo → @drawable/branded_login_logo. Also hides scan_qr ImageButton on login (visibility=gone in account_setup.xml).",
+      "risk": "low",
+      "notes": "Tint paints opaque pixels white, transparent stays transparent — works on solid Avuz blue bg. Source PNG in /assets/logo2.png."
+    },
+    {
+      "id": "first-run-single-page",
+      "type": "code",
+      "paths": [
+        "app/src/main/java/com/nextcloud/client/onboarding/FirstRunActivity.kt"
+      ],
+      "description": "Reduced first-run intro from 4 pages (logo, files, groupware, talk) to single page (Avuz logo only). Hides ProgressIndicator when itemCount==1.",
+      "risk": "medium",
+      "notes": "If upstream adds a new feature page, our companion-object array must be re-trimmed. Conflict-prone on FirstRunActivity edits."
+    },
+    {
+      "id": "splash-image-size",
+      "type": "config",
+      "paths": [
+        "app/src/main/res/values/dims.xml"
+      ],
+      "description": "splash_image_size 180dp → 220dp. Bigger logo on first-run intro + login thumbnail.",
+      "risk": "low",
+      "notes": "Single dimen, shared by whats_new_element.xml and account_setup.xml. Conflict-prone on upstream dims.xml edits."
+    },
+    {
+      "id": "login-hint-color",
+      "type": "config",
+      "paths": [
+        "app/src/main/res/values/setup.xml"
+      ],
+      "description": "login_text_hint_color #7fd2e8f0 → #b3ffffff (70% white). Cleaner on Avuz blue login bg.",
+      "risk": "low",
+      "notes": "Color override only; no code path."
+    },
+    {
+      "id": "global-styles",
+      "type": "config",
+      "paths": [
+        "app/src/main/res/values/styles.xml"
+      ],
+      "description": "Style tweaks for Avuz palette consistency. Theme.ownCloud.Launcher: parent → Theme.Material3.Light.NoActionBar (kills inflated AppCompat ActionBar that painted colorPrimary blue band at top). windowActionBar=false, windowNoTitle=true. windowBackground/statusBarColor/navigationBarColor → bg_drawer_header (#f2f6fb white). windowLightStatusBar/Navigation=true. Theme.App.Starting (system splash): mirrored white system bars + windowSplashScreenIconBackgroundColor=white + colorPrimary/Dark overrides for cold-start frame. Result: all-white launch + splash, no blue strips.",
+      "risk": "high",
+      "notes": "styles.xml is large and upstream-active. Audit each merge for missed updates."
+    },
+    {
+      "id": "proguard-rules",
+      "type": "build",
+      "paths": [
+        "app/proguard-rules.pro",
+        "app/build.gradle.kts"
+      ],
+      "description": "Release build minification DISABLED (isMinifyEnabled=false) to match upstream Nextcloud config. Upstream ships release unminified — code is not tested with R8 and minification breaks reflection-based features (Apache HttpClient via OwnCloudClientFactory, Guava TypeToken in FileUploadWorker, etc). proguard-rules.pro retained for future re-enable if needed but currently unused.",
+      "risk": "low",
+      "notes": "Trade-off: ~3x larger AAB (~140MB vs ~45MB) but zero R8-related crashes. Play AAB delivery + per-ABI/density splits keep on-device install size reasonable. Revisit only if shipping minify becomes essential."
+    },
+    {
+      "id": "claude-md",
+      "type": "doc",
+      "paths": [
+        "CLAUDE.md"
+      ],
+      "description": "Project guidance for Claude Code: branding architecture, key files, merge strategy.",
+      "risk": "low",
+      "notes": "Not shipped in APK."
+    },
+    {
+      "id": "assets-source",
+      "type": "asset",
+      "paths": [
+        "assets/icon.png",
+        "assets/logo.png",
+        "assets/logo2.png",
+        "assets/network-diagram.png"
+      ],
+      "description": "Source brand assets (full-resolution masters). Not packaged into APK.",
+      "risk": "low",
+      "notes": "Reference only. Re-export to res/drawable-* when updating."
+    }
+  ]
+}

@@ -94,3 +94,5 @@ jacoco/
 # python
 **/__pycache__/
 /gradle/verification-keyring.gpg
+keystore.properties
+keystore/

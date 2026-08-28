@@ -76,6 +76,12 @@ val configProps = Properties().apply {
     if (file.exists()) load(FileInputStream(file))
 }
 
+// Load keystore properties for signing
+val keystoreProps = Properties().apply {
+    val file = rootProject.file("keystore.properties")
+    if (file.exists()) load(FileInputStream(file))
+}
+
 val ncTestServerUsername = configProps["NC_TEST_SERVER_USERNAME"]
 val ncTestServerPassword = configProps["NC_TEST_SERVER_PASSWORD"]
 val ncTestServerBaseUrl = configProps["NC_TEST_SERVER_BASEURL"]
@@ -87,6 +93,19 @@ android {
         cmake {
             version = "${ndkEnv["CMAKE_VERSION"]}"
             path = file("src/main/cpp/CMakeLists.txt")
+        }
+    }
+
+    // Signing configuration for release builds
+    signingConfigs {
+        create("release") {
+            val keystoreFile = rootProject.file(keystoreProps["storeFile"] as? String ?: "")
+            if (keystoreFile.exists()) {
+                storeFile = keystoreFile
+                storePassword = keystoreProps["storePassword"] as? String
+                keyAlias = keystoreProps["keyAlias"] as? String
+                keyPassword = keystoreProps["keyPassword"] as? String
+            }
         }
     }
 
@@ -102,7 +121,7 @@ android {
             "TEST_SERVER_PASSWORD" to ncTestServerPassword.toString(),
             "disableAnalytics" to "true"
         )
-        applicationId = "com.nextcloud.client"
+        applicationId = "com.avuz.conecta"
         minSdk = 28
         targetSdk = 36
         compileSdk = 37
@@ -116,7 +135,7 @@ android {
 
         // arguments to be passed to functional tests
         testInstrumentationRunner = if (shotTest) "com.karumi.shot.ShotTestRunner"
-        else "com.nextcloud.client.TestRunner"
+        else "com.avuz.conecta.TestRunner"
 
         versionCode = versionMajor * 10000000 + versionMinor * 10000 + versionPatch * 100 + versionBuild
         versionName = when {
@@ -133,6 +152,11 @@ android {
         buildTypes {
             release {
                 buildConfigField("String", "NC_TEST_SERVER_DATA_STRING", "\"\"")
+                signingConfig = signingConfigs.getByName("release")
+                // Minify disabled to match upstream Nextcloud config — upstream is not tested with R8
+                // and minification breaks reflection-based features (Apache HttpClient, Guava TypeToken, etc.)
+                isMinifyEnabled = false
+                ndk.debugSymbolLevel = "FULL"
             }
 
             debug {
@@ -145,29 +169,29 @@ android {
         productFlavors {
             // used for f-droid
             register("generic") {
-                applicationId = "com.nextcloud.client"
+                applicationId = "com.avuz.conecta"
                 dimension = "default"
             }
 
             register("gplay") {
-                applicationId = "com.nextcloud.client"
+                applicationId = "com.avuz.conecta"
                 dimension = "default"
             }
 
             register("huawei") {
-                applicationId = "com.nextcloud.client"
+                applicationId = "com.avuz.conecta"
                 dimension = "default"
             }
 
             register("versionDev") {
-                applicationId = "com.nextcloud.android.beta"
+                applicationId = "com.avuz.conecta.beta"
                 dimension = "default"
                 versionCode = 20220322
                 versionName = "20220322"
             }
 
             register("qa") {
-                applicationId = "com.nextcloud.android.qa"
+                applicationId = "com.avuz.conecta.qa"
                 dimension = "default"
                 versionCode = 1
                 versionName = "1"
