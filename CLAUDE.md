@@ -193,8 +193,8 @@ android/
 
 ## Current Version
 
-- Version: 3.35.0
-- Version Code: 30350090
+- Version: 34.1.1
+- Version Code: 340010190
 
 ## License
 
@@ -211,5 +211,5 @@ android/
 
 ## Branch Info
 
-This is a fork/customization branch: `avuz-customization-stable-3.35.0`
+This is a fork/customization branch: `avuz-customization-stable-34.1.1`
 Main upstream branch: `master`

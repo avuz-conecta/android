@@ -1,10 +1,14 @@
 {
-  "base_version": "3.35.0",
-  "target_version": "3.35.0",
+  "base_version": "34.1.1",
+  "target_version": "34.1.1",
   "upstream_repo": "nextcloud/android",
-  "upstream_branch": "stable-3.35",
-  "source_branch": "avuz-customization-stable-3.35.0",
+  "upstream_branch": "stable-34.1.1",
+  "source_branch": "avuz-customization-stable-34.1.1",
   "app_id": "com.avuz.conecta",
+  "dependencies": {
+    "android-library": "2.25.0"
+  },
+  "registry_notes": "Consolidated 2026-08-28 during the 3.35.0 -> 34.1.1 base upgrade (docs/superpowers/plans/2026-08-27-upgrade-to-stable-34.1.1.md, Task 4). Each entry now carries category (identity/visual/build/doc), merge_risk (verbatim/hand-merge, from the design spec's 27-file branding re-apply checklist), and — where relevant — an actual_outcome_34_1_1 note recording what really happened during the Task 2 cherry-pick (commit af7aeaa95f), since predicted risk and realized risk diverged for a few files.",
   "entries": [
     {
       "id": "branding-setup-xml",
@@ -12,9 +16,12 @@
       "paths": [
         "app/src/main/res/values/setup.xml"
       ],
+      "category": "identity",
+      "merge_risk": "hand-merge",
       "description": "Central white-label config: app_name 'Avuz Conecta', account_type 'avuzconecta', authority 'com.avuz.conecta', data_folder, db_file/name, user-agent strings. Avuz palette (primary #2bb5e3, primary_dark #1e9bc7, accent #d2e314, bg_splash #f2f6fb). Drawer header dimensions. Privacy URL → avuz.cloud. Splash text 'Avuz Conecta'. is_branded_client=true.",
       "risk": "low",
-      "notes": "Upstream-supported override file. Most changes here are conflict-free. Watch for new keys added upstream."
+      "notes": "Upstream-supported override file. Most changes here are conflict-free. Watch for new keys added upstream.",
+      "actual_outcome_34_1_1": "One conflict hunk on the app-identity strings block during the Task 2 cherry-pick. Upstream renamed only_office_user_agent -> office_user_agent; resolved by keeping the new upstream key name with Avuz's branded value, per the 'new key + Avuz value' rule. Colors, dims, and feature flags elsewhere in the file auto-merged clean."
     },
     {
       "id": "feature-flags-disabled",
@@ -22,19 +29,25 @@
       "paths": [
         "app/src/main/res/values/setup.xml"
       ],
+      "category": "identity",
+      "merge_risk": "verbatim",
       "description": "Disabled flags: help_enabled=false, sourcecode_enabled=false, participate_enabled=false (hides Community menu), imprint_enabled=false, logger_enabled=false, show_drawer_logout=false, recently_modified_enabled=false, show_provider_or_own_installation=false (hides 'Sign up with provider' + 'Host your own server' on first-run intro).",
       "risk": "low",
-      "notes": "show_provider_or_own_installation also affects DrawerActivity add-account flow and UserListAdapter — intended single-flag toggle."
+      "notes": "show_provider_or_own_installation also affects DrawerActivity add-account flow and UserListAdapter — intended single-flag toggle.",
+      "actual_outcome_34_1_1": "Auto-merged cleanly on the Task 2 cherry-pick — not part of the conflicted identity-strings hunk in this same file."
     },
     {
-      "id": "android-library-sha-bump",
+      "id": "android-library-version-pin",
       "type": "build",
       "paths": [
         "gradle/libs.versions.toml"
       ],
-      "description": "Bumped androidLibraryVersion 827db94 → 264573e (master HEAD 2026-04-28). Original sha had broken JitPack POM artifact (404 only on .pom, .aar served).",
-      "risk": "medium",
-      "notes": "Forward-bumped from upstream-pinned sha. Revert when upstream pins a new working sha. Watch for nextcloud-android-library API drift on next merge."
+      "category": "build",
+      "merge_risk": "verbatim",
+      "status": "resolved-on-34.1.1-base",
+      "description": "On the 3.35.0 base, androidLibraryVersion was forward-bumped 827db94 -> 264573e3 (and later pinned to tag 2.22.2) to work around a broken JitPack POM artifact on the upstream-pinned sha. Not applicable on the 34.1.1 base: upstream stable-34.1.1 ships androidLibraryVersion = 2.25.0 by default in gradle/libs.versions.toml, which resolves cleanly. The file was not part of the Task 2 branding cherry-pick and was left untouched at the upstream default.",
+      "risk": "low",
+      "notes": "Historical entry kept for context. If a future android-library bump breaks JitPack resolution again, see docs/superpowers/plans/2026-08-27-upgrade-to-stable-34.1.1.md and the old 264573e3/827db94/2.22.2 workaround on avuz-customization-stable-3.35.0 for the pattern (pin to a tag, not a commit sha)."
     },
     {
       "id": "branding-build-config",
@@ -42,9 +55,27 @@
       "paths": [
         "app/build.gradle.kts"
       ],
-      "description": "applicationId 'com.avuz.conecta' (gplay/generic/huawei), 'com.avuz.conecta.beta' (versionDev), 'com.avuz.conecta.qa' (qa). Version 3.35.0.",
-      "risk": "medium",
-      "notes": "Conflict-prone on version bumps. Reapply applicationId after each upstream version merge."
+      "category": "identity",
+      "merge_risk": "hand-merge",
+      "critical": true,
+      "critical_note": "Signing block is Avuz-only — upstream 34.1.1 ships app/build.gradle.kts with NO signing config at all. The keystoreProps loader (reads keystore.properties), the signingConfigs { create(\"release\") { ... } } block, and signingConfig = signingConfigs.getByName(\"release\") on the release buildType must all be re-applied by hand on every upgrade. Miss any of them and release builds are unsigned/uninstallable. keystore.properties and keystore/avuz-conecta.jks are git-ignored and persist in the working tree across branch switches, so the secrets survive — only the build-file wiring needs re-applying. Verify post-merge with apksigner --print-certs (expect CN=Avuz Conecta).",
+      "description": "applicationId 'com.avuz.conecta' (gplay/generic/huawei), 'com.avuz.conecta.beta' (versionDev), 'com.avuz.conecta.qa' (qa). Version 34.1.1 (versionMajor=34, versionMinor=1, versionPatch=1, versionBuild=90), versionCode 340010190. Version numbers follow upstream, not Avuz's own scheme.",
+      "risk": "high",
+      "notes": "Highest-churn file across upstream (39 commits between stable-3.35.0 and stable-34.1.1). Always re-apply Avuz identity + signing onto upstream's current file structure; never port upstream's changes into the old branded file.",
+      "actual_outcome_34_1_1": "Two conflict hunks on the Task 2 cherry-pick: (1) version block — resolved by keeping upstream's versionMajor/Minor/Patch/Build (34/1/1/90), discarding the old branding's 3/35/0/95; (2) defaultConfig hunk — kept upstream's testInstrumentationRunnerArguments map (TEST_SERVER_* + disableAnalytics) and grafted applicationId = \"com.avuz.conecta\" onto it. The signing block, keystore loader, and all per-flavor applicationIds auto-merged clean (not in conflict)."
+    },
+    {
+      "id": "gitignore-secrets",
+      "type": "config",
+      "paths": [
+        ".gitignore"
+      ],
+      "category": "build",
+      "merge_risk": "verbatim",
+      "description": "Ignore rules protecting Avuz signing secrets and local config: keystore.properties, keystore/, *.jks, *.keystore, plus general hygiene additions (release.properties, google-services.json, *.p12/*.pem, .env*, editor/OS temp files, NDK build artifacts, test/coverage output).",
+      "risk": "low",
+      "notes": "Not part of the app bundle but load-bearing for Job 4/branding-build-config's signing block — if keystore.properties or keystore/ ever stop being ignored, secrets could be committed.",
+      "actual_outcome_34_1_1": "Auto-merged cleanly on the Task 2 cherry-pick."
     },
     {
       "id": "notification-icon",
@@ -52,9 +83,12 @@
       "paths": [
         "app/src/main/res/drawable/notification_icon.xml"
       ],
+      "category": "visual",
+      "merge_risk": "verbatim",
       "description": "Branded notification icon — 3 Avuz dots vector (monochrome white). Used by foreground service notifications (file upload/download progress, sync, scan-to-pdf). Replaces Nextcloud 3-circles trademark mark.",
       "risk": "low",
-      "notes": "Android notification small icons must be white-only on transparent bg (system applies tint)."
+      "notes": "Android notification small icons must be white-only on transparent bg (system applies tint).",
+      "actual_outcome_34_1_1": "Spec flagged this as a churn-check file at implementation time; it auto-merged cleanly on the Task 2 cherry-pick."
     },
     {
       "id": "launcher-icons",
@@ -70,9 +104,12 @@
         "app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
         "app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
       ],
+      "category": "visual",
+      "merge_risk": "verbatim",
       "description": "Avuz launcher icons (3 dots: blue/olive/gray) replacing Nextcloud trademark mark. Adaptive icon (foreground + background + monochrome for Android 13+). Legacy raster fallbacks per density.",
       "risk": "low",
-      "notes": "Source PNGs in /assets/ (icon.png). Regenerate via Image Asset Studio if dimensions change."
+      "notes": "Source PNGs in /assets/ (icon.png). Regenerate via Image Asset Studio if dimensions change.",
+      "actual_outcome_34_1_1": "ic_launcher_background.xml and mipmap-anydpi/ic_launcher.xml were flagged as churn-check files by the spec; all files in this group auto-merged cleanly on the Task 2 cherry-pick."
     },
     {
       "id": "splash-screen",
@@ -82,9 +119,12 @@
         "app/src/main/res/drawable/branded_splash_logo.xml",
         "app/src/main/res/drawable-xxxhdpi/avuz_splash_logo.png"
       ],
+      "category": "visual",
+      "merge_risk": "verbatim",
       "description": "Splash screen with Avuz logo. branded_splash_logo.xml is alias → avuz_splash_logo PNG. Layout uses setup.xml dimensions and bg_splash color.",
       "risk": "medium",
-      "notes": "activity_splash.xml is upstream layout — watch for structural changes. Alias pattern isolates asset swap."
+      "notes": "activity_splash.xml is upstream layout — watch for structural changes. Alias pattern isolates asset swap.",
+      "actual_outcome_34_1_1": "Auto-merged cleanly on the Task 2 cherry-pick."
     },
     {
       "id": "drawer-header",
@@ -94,9 +134,12 @@
         "app/src/main/res/drawable/branded_drawer_logo.xml",
         "app/src/main/res/drawable-xxxhdpi/avuz_drawer_logo.png"
       ],
+      "category": "visual",
+      "merge_risk": "verbatim",
       "description": "Drawer header logo + sizing. Alias pattern (branded_drawer_logo) → avuz_drawer_logo PNG. Layout pulls dimensions/colors from setup.xml.",
       "risk": "medium",
-      "notes": "drawer_header.xml conflicts possible if upstream restructures header. Bindings use setup.xml refs to minimize surface."
+      "notes": "drawer_header.xml conflicts possible if upstream restructures header. Bindings use setup.xml refs to minimize surface.",
+      "actual_outcome_34_1_1": "Auto-merged cleanly on the Task 2 cherry-pick."
     },
     {
       "id": "login-logo",
@@ -109,9 +152,12 @@
         "app/src/main/res/layout/activity_preview_media.xml",
         "app/src/main/java/com/nextcloud/client/onboarding/FirstRunActivity.kt"
       ],
+      "category": "visual",
+      "merge_risk": "verbatim",
       "description": "Replace Nextcloud trademark logo with Avuz wordmark on login + first-run + deep-link + media preview placeholder. branded_login_logo.xml = bitmap wrapper applying android:tint=@android:color/white over avuz_logo.png. Layouts swap @drawable/logo → @drawable/branded_login_logo. Also hides scan_qr ImageButton on login (visibility=gone in account_setup.xml).",
       "risk": "low",
-      "notes": "Tint paints opaque pixels white, transparent stays transparent — works on solid Avuz blue bg. Source PNG in /assets/logo2.png."
+      "notes": "Tint paints opaque pixels white, transparent stays transparent — works on solid Avuz blue bg. Source PNG in /assets/logo2.png.",
+      "actual_outcome_34_1_1": "deep_link_login.xml and activity_preview_media.xml were flagged as churn-check files by the spec; all files in this group (including FirstRunActivity.kt) auto-merged cleanly on the Task 2 cherry-pick."
     },
     {
       "id": "first-run-single-page",
@@ -119,9 +165,12 @@
       "paths": [
         "app/src/main/java/com/nextcloud/client/onboarding/FirstRunActivity.kt"
       ],
+      "category": "visual",
+      "merge_risk": "verbatim",
       "description": "Reduced first-run intro from 4 pages (logo, files, groupware, talk) to single page (Avuz logo only). Hides ProgressIndicator when itemCount==1.",
       "risk": "medium",
-      "notes": "If upstream adds a new feature page, our companion-object array must be re-trimmed. Conflict-prone on FirstRunActivity edits."
+      "notes": "If upstream adds a new feature page, our companion-object array must be re-trimmed. Conflict-prone on FirstRunActivity edits.",
+      "actual_outcome_34_1_1": "Auto-merged cleanly on the Task 2 cherry-pick."
     },
     {
       "id": "splash-image-size",
@@ -129,9 +178,12 @@
       "paths": [
         "app/src/main/res/values/dims.xml"
       ],
+      "category": "visual",
+      "merge_risk": "verbatim",
       "description": "splash_image_size 180dp → 220dp. Bigger logo on first-run intro + login thumbnail.",
       "risk": "low",
-      "notes": "Single dimen, shared by whats_new_element.xml and account_setup.xml. Conflict-prone on upstream dims.xml edits."
+      "notes": "Single dimen, shared by whats_new_element.xml and account_setup.xml. Conflict-prone on upstream dims.xml edits.",
+      "actual_outcome_34_1_1": "The design spec flagged dims.xml as hand-merge risk (14 upstream commits between the 3.35.0 and 34.1.1 bases). It auto-merged cleanly on this cherry-pick, but treat as hand-merge risk on future base bumps."
     },
     {
       "id": "login-hint-color",
@@ -139,9 +191,12 @@
       "paths": [
         "app/src/main/res/values/setup.xml"
       ],
+      "category": "visual",
+      "merge_risk": "verbatim",
       "description": "login_text_hint_color #7fd2e8f0 → #b3ffffff (70% white). Cleaner on Avuz blue login bg.",
       "risk": "low",
-      "notes": "Color override only; no code path."
+      "notes": "Color override only; no code path.",
+      "actual_outcome_34_1_1": "Auto-merged cleanly — not part of the conflicted identity-strings hunk in this same file."
     },
     {
       "id": "global-styles",
@@ -149,9 +204,12 @@
       "paths": [
         "app/src/main/res/values/styles.xml"
       ],
+      "category": "visual",
+      "merge_risk": "verbatim",
       "description": "Style tweaks for Avuz palette consistency. Theme.ownCloud.Launcher: parent → Theme.Material3.Light.NoActionBar (kills inflated AppCompat ActionBar that painted colorPrimary blue band at top). windowActionBar=false, windowNoTitle=true. windowBackground/statusBarColor/navigationBarColor → bg_drawer_header (#f2f6fb white). windowLightStatusBar/Navigation=true. Theme.App.Starting (system splash): mirrored white system bars + windowSplashScreenIconBackgroundColor=white + colorPrimary/Dark overrides for cold-start frame. Result: all-white launch + splash, no blue strips.",
       "risk": "high",
-      "notes": "styles.xml is large and upstream-active. Audit each merge for missed updates."
+      "notes": "styles.xml is large and upstream-active. Audit each merge for missed updates.",
+      "actual_outcome_34_1_1": "The design spec flagged styles.xml as hand-merge risk (7 upstream commits between the 3.35.0 and 34.1.1 bases). It auto-merged cleanly on this cherry-pick, but keep treating it as high upstream-churn risk on future base bumps."
     },
     {
       "id": "proguard-rules",
@@ -160,9 +218,12 @@
         "app/proguard-rules.pro",
         "app/build.gradle.kts"
       ],
+      "category": "build",
+      "merge_risk": "verbatim",
       "description": "Release build minification DISABLED (isMinifyEnabled=false) to match upstream Nextcloud config. Upstream ships release unminified — code is not tested with R8 and minification breaks reflection-based features (Apache HttpClient via OwnCloudClientFactory, Guava TypeToken in FileUploadWorker, etc). proguard-rules.pro retained for future re-enable if needed but currently unused.",
       "risk": "low",
-      "notes": "Trade-off: ~3x larger AAB (~140MB vs ~45MB) but zero R8-related crashes. Play AAB delivery + per-ABI/density splits keep on-device install size reasonable. Revisit only if shipping minify becomes essential."
+      "notes": "Trade-off: ~3x larger AAB (~140MB vs ~45MB) but zero R8-related crashes. Play AAB delivery + per-ABI/density splits keep on-device install size reasonable. Revisit only if shipping minify becomes essential.",
+      "actual_outcome_34_1_1": "proguard-rules.pro auto-merged cleanly on the Task 2 cherry-pick (isMinifyEnabled=false lives inside the build.gradle.kts hand-merge, see branding-build-config)."
     },
     {
       "id": "claude-md",
@@ -170,9 +231,12 @@
       "paths": [
         "CLAUDE.md"
       ],
-      "description": "Project guidance for Claude Code: branding architecture, key files, merge strategy.",
+      "category": "doc",
+      "merge_risk": "hand-merge",
+      "description": "Project guidance for Claude Code: branding architecture, key files, merge strategy, current version/branch facts.",
       "risk": "low",
-      "notes": "Not shipped in APK."
+      "notes": "Not shipped in APK. Keep 'Current Version' and 'Branch Info' sections accurate after every base bump.",
+      "actual_outcome_34_1_1": "The design spec predicted verbatim (0 upstream churn on the old branch), but upstream stable-34.1.1 introduced its own CLAUDE.md — a one-line @AGENTS.md include directive — causing an add/add conflict. Resolved by keeping the upstream @AGENTS.md include at the top, followed by Avuz's full documentation below it."
     },
     {
       "id": "assets-source",
@@ -183,9 +247,12 @@
         "assets/logo2.png",
         "assets/network-diagram.png"
       ],
+      "category": "visual",
+      "merge_risk": "verbatim",
       "description": "Source brand assets (full-resolution masters). Not packaged into APK.",
       "risk": "low",
-      "notes": "Reference only. Re-export to res/drawable-* when updating."
+      "notes": "Reference only. Re-export to res/drawable-* when updating.",
+      "actual_outcome_34_1_1": "Not part of app/ or res/, unaffected by upstream churn; carried forward as-is."
     }
   ]
 }
