@@ -27,17 +27,26 @@ The recent download outage was itself upstream drift: a hand-bump of `android-li
 | Decision | Choice |
 |----------|--------|
 | Carry strategy | Fresh branch off tag `stable-34.1.1`, re-apply branding (no 2733-commit merge) |
-| Version identity | Adopt upstream **34.1.x** versionName/Code |
+| Version identity | Adopt upstream **34.1.x** versionName/Code (versionCode 30M → 340M — monotonic, valid update, one-way door) |
 | Branding scope | **Apply all** branding (visual + structural) now; the later rebrand swaps only what changes |
+| Registry | **Consolidate**: merge this spec's per-file merge checklist *and* `customizations.json` metadata into one registry — neither dropped. Keeping it current is a hard acceptance criterion |
+| Flavor scope | **gplay only** for this upgrade. `generic`/`huawei`/`versionDev`/`qa` explicitly out of scope (untested, not claimed) |
 | Rebrand | Separate future feature — visuals-only, same app identity (`com.avuz.conecta`, "Avuz Conecta") |
-| Verification bar | Full core-flow test on emulator |
+| Verification bar | Full core-flow test on emulator, against a **33.0.8** server (prod-equivalent) |
+
+## Server compatibility (grilled, cleared)
+
+- Prod + homologation servers both run **Nextcloud 33.0.8**; the emulator test hits `conectahml.avuz.app` (= prod version), so results are representative.
+- Client 34.1.1 vs server 33.0.8 = **client newer than server**, the safe direction: the client feature-detects via OCS capabilities and degrades, not crashes. One major apart, server not EOL → no "unsupported server" wall.
+- **E2E encryption is OFF** (`occ app:list` shows `end_to_end_encryption` not enabled; no client build flag either side). E2E is the one feature that could hard-break on a client/server crypto-version gap — N/A here.
 
 ## Branding re-apply checklist (27 files)
 
 Split by upstream churn `stable-3.35.0..stable-34.1.1` (higher churn = hand-merge, not verbatim):
 
 **Hand-merge (upstream changed the file):**
-- `app/build.gradle.kts` — 39 commits. The real work: app-id `com.avuz.conecta`, flavors (generic/gplay/huawei/versionDev/qa), signing config (Avuz keystore → CN=Avuz Conecta), versionName/Code → 34.1.x. Re-apply Avuz identity **onto** 34.1.1's file; do not port 34.1.1 changes into the old file.
+- `app/build.gradle.kts` — 39 commits. The real work: app-id `com.avuz.conecta`, flavors (generic/gplay/huawei/versionDev/qa), versionName/Code → 34.1.x. Re-apply Avuz identity **onto** 34.1.1's file; do not port 34.1.1 changes into the old file.
+  - **CRITICAL — signing block.** Upstream 34.1.1 has **no signing config**. The entire mechanism is Avuz-only: `keystore.properties` loading + `signingConfigs { release }` + `signingConfig = signingConfigs.getByName("release")` on the release buildType. Miss it → every release build is unsigned/uninstallable. `keystore.properties` and `keystore/avuz-conecta.jks` are git-ignored (local-only) and persist in the working tree across the branch switch — the *secrets* survive; the *build-file block* must be re-applied by hand. Verified at Phase 5 step 2 (apksigner → CN=Avuz Conecta).
 - `app/src/main/res/values/dims.xml` — 14 commits (drawer header dims).
 - `app/src/main/res/values/styles.xml` — 7 commits.
 - `app/src/main/res/values/setup.xml` — 2 commits (central branding config).
@@ -65,22 +74,24 @@ Consistency rule: any layout that references a `branded_*`/`avuz_*` drawable mus
 
 **Phase 4 — Build.** `./gradlew clean assembleGplayRelease` (no flags). Fix toolchain fallout — expect AGP 9 DSL/deprecation breakage concentrated in `build.gradle.kts`, plus Kotlin 2.4 changes. Iterate until BUILD SUCCESSFUL.
 
-**Phase 5 — Verify (done bar).** Install on emulator, log into an Avuz server, run the adb-logcat loop over: login, folder browse, **download**, **upload**, **auto-upload**, **sync-conflict**, and confirm branding renders. Green build + all flows pass = done.
+**Phase 5 — Verify (done bar).** Install on emulator, log into a **33.0.8** Avuz server (`conectahml.avuz.app`, prod-equivalent), run the adb-logcat loop over: login, folder browse, **download**, **upload**, **auto-upload**, **sync-conflict**, and confirm branding renders. Green build + all flows pass = done. gplay flavor only.
 
 ## Verification
 
 Definition of done:
 
-1. `./gradlew clean assembleGplayRelease` — no flags — BUILD SUCCESSFUL.
-2. APK installs on emulator; `apksigner verify` → CN=Avuz Conecta, v2 scheme true.
-3. adb-logcat confirms, with no `UnsupportedOperationException`/error results: login, browse, download (HTTP 200 + file on disk), upload, auto-upload, sync-conflict dialog.
+1. `./gradlew clean assembleGplayRelease` — no flags — BUILD SUCCESSFUL. (gplay only; other flavors out of scope.)
+2. APK installs on emulator; `apksigner verify` → CN=Avuz Conecta, v2 scheme true. (Proves the Avuz signing block survived the `build.gradle.kts` re-apply.)
+3. adb-logcat confirms, against the 33.0.8 server, with no `UnsupportedOperationException`/error results: login, browse, download (HTTP 200 + file on disk), upload, auto-upload, sync-conflict dialog.
 4. Branding visible: app name, launcher icon, splash, drawer header.
+5. Consolidated registry (`customizations.json` + merged checklist) lists every carried customization and reflects the 34.1.1 base (`android-library 2.25.0`, no `264573e3`/`827db94` references).
 
 ## Risks & mitigations
 
 - **AGP 8→9 breakage in `build.gradle.kts`** (highest). Mitigation: re-apply Avuz identity onto 34.1.1's build file rather than porting upstream into the old one; consult upstream's 34.1.1 `build.gradle.kts` as the correct AGP-9 shape.
 - **Signing config drift.** The Avuz keystore/signing block must survive the build-file re-apply, or release APKs won't sign. Verify in Phase 5 step 2.
 - **Branding drift in `dims.xml`/`styles.xml`.** Upstream churn may have renamed/removed keys Avuz overrides. Reconcile during hand-merge.
+- **minSdk/targetSdk shift** (SDK levels moved out of the version catalog upstream — not chased during scoping). Low risk; confirm at implementation whether the min bumped and whether it drops any device tier Avuz cares about.
 
 ## Rollback
 
@@ -89,6 +100,7 @@ The old branch `avuz-customization-stable-3.35.0` (with branding committed in Ph
 ## Out of scope
 
 - New features and the visual rebrand (separate follow-up on this new base).
+- **Flavors other than gplay** (`generic`/`huawei`/`versionDev`/`qa`) — not built or verified in this upgrade; do not claim they work.
 - Further `android-library` bumps beyond upstream's `2.25.0`.
 - CI / multi-machine reproducibility.
 - Config-cache: `stable-3.35.0` release built clean without flags; re-confirm on 34.1.1, address only if it regresses.
