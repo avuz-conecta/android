@@ -10,18 +10,18 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Blue circle (left) -->
+    <!-- Blue circle (left) - monochrome -->
     <path
-        android:fillColor="#2bb5e3"
+        android:fillColor="#000000"
         android:pathData="M34,54 m-9,0 a9,9 0,1,1 18,0 a9,9 0,1,1 -18,0"/>
 
-    <!-- Olive green circle (center) -->
+    <!-- Olive green circle (center) - monochrome -->
     <path
-        android:fillColor="#d2e314"
+        android:fillColor="#000000"
         android:pathData="M54,54 m-9,0 a9,9 0,1,1 18,0 a9,9 0,1,1 -18,0"/>
 
-    <!-- Gray circle (right) -->
+    <!-- Gray circle (right) - monochrome -->
     <path
-        android:fillColor="#d9d9d9"
+        android:fillColor="#000000"
         android:pathData="M74,54 m-9,0 a9,9 0,1,1 18,0 a9,9 0,1,1 -18,0"/>
 </vector>

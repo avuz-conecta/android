@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Avuz Conecta - Android Client
+  ~ Branded drawer logo alias - points to avuz_drawer_logo
+  ~ Change the drawable reference here to update drawer logo without modifying layouts
+  ~
+  ~ SPDX-FileCopyrightText: 2025 Avuz
+  ~ SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
+-->
+<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
+    android:src="@drawable/avuz_drawer_logo" />
