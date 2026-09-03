@@ -137,6 +137,12 @@
         <item name="android:windowLightNavigationBar">true</item>
     </style>
 
+    <style name="Theme.ownCloud.noActionBar.Login.WhatsNew" parent="Theme.ownCloud.noActionBar.Login">
+        <item name="android:windowBackground">@color/primary</item>
+        <item name="android:navigationBarColor">@color/primary</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+
     <style name="ownCloud.AlertDialog" parent="Theme.Material3.DayNight.Dialog.Alert">
         <item name="colorAccent">@color/color_accent</item>
         <item name="searchViewStyle">@style/ownCloud.SearchView</item>

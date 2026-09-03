@@ -590,7 +590,7 @@
             android:exported="false" />
         <activity
             android:name="com.nextcloud.client.onboarding.WhatsNewActivity"
-            android:theme="@style/Theme.ownCloud.noActionBar.Login" />
+            android:theme="@style/Theme.ownCloud.noActionBar.Login.WhatsNew" />
         <activity
             android:name="com.nextcloud.client.onboarding.FirstRunActivity"
             android:configChanges="orientation|screenSize"
