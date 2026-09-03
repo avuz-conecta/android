@@ -355,8 +355,8 @@
     </style>
 
     <style name="ThemeOverlay.App.Login.TextInputLayout" parent="">
-        <item name="colorPrimary">@color/white</item>
-        <item name="colorOnSurface">@color/white</item>
+        <item name="colorPrimary">@color/login_text_color</item>
+        <item name="colorOnSurface">@color/login_text_color</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Material3.BodyLarge</item>
         <item name="textAppearanceCaption">@style/TextAppearance.Material3.BodySmall</item>
         <item name="editTextStyle">@style/Widget.Material3.TextInputEditText.OutlinedBox</item>
