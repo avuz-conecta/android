@@ -1,7 +1,7 @@
 <!--
   ~ Avuz Conecta - Android Client
   ~
-  ~ SPDX-FileCopyrightText: 2025 Avuz
+  ~ SPDX-FileCopyrightText: 2026 Avuz
   ~ SPDX-License-Identifier: AGPL-3.0-or-later OR GPL-2.0-only
 -->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
@@ -10,18 +10,19 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Blue circle (left) -->
+    <!-- Folder back tab -->
     <path
         android:fillColor="#2bb5e3"
-        android:pathData="M34,54 m-9,0 a9,9 0,1,1 18,0 a9,9 0,1,1 -18,0"/>
-
-    <!-- Olive green circle (center) -->
+        android:pathData="M32,40 h16 l6,6 h22 a4,4 0 0 1 4,4 v4 h-52 v-10 a4,4 0 0 1 4,-4 z"/>
+    <!-- Folder body -->
     <path
-        android:fillColor="#d2e314"
-        android:pathData="M54,54 m-9,0 a9,9 0,1,1 18,0 a9,9 0,1,1 -18,0"/>
-
-    <!-- Gray circle (right) -->
-    <path
-        android:fillColor="#d9d9d9"
-        android:pathData="M74,54 m-9,0 a9,9 0,1,1 18,0 a9,9 0,1,1 -18,0"/>
+        android:fillColor="#FFFFFF"
+        android:pathData="M30,50 h48 a4,4 0 0 1 4,4 v18 a4,4 0 0 1 -4,4 h-48 a4,4 0 0 1 -4,-4 v-18 a4,4 0 0 1 4,-4 z"/>
+    <!-- Three dots inside the folder -->
+    <path android:fillColor="#2bb5e3"
+        android:pathData="M45,63 m-5,0 a5,5 0 1 1 10,0 a5,5 0 1 1 -10,0"/>
+    <path android:fillColor="#d2e314"
+        android:pathData="M59,63 m-5,0 a5,5 0 1 1 10,0 a5,5 0 1 1 -10,0"/>
+    <path android:fillColor="#d9d9d9"
+        android:pathData="M73,63 m-5,0 a5,5 0 1 1 10,0 a5,5 0 1 1 -10,0"/>
 </vector>
