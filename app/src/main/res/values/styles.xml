@@ -363,19 +363,19 @@
     </style>
 
     <style name="TextInputLayoutLogin" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/white</item>
+        <item name="boxStrokeColor">#9E9E9E</item>
         <item name="boxStrokeErrorColor">@color/white</item>
         <item name="hintTextAppearance">@style/HintTextLogin</item>
         <item name="errorTextAppearance">@style/HintTextLogin</item>
-        <item name="android:colorPrimary">@color/white</item>
+        <item name="android:colorPrimary">#1A1A1A</item>
         <!-- Theme attributes -->
-        <item name="android:textColorHint">#80FFFFFF</item>
-        <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlActivated">@color/white</item>
+        <item name="android:textColorHint">#801A1A1A</item>
+        <item name="colorControlNormal">#9E9E9E</item>
+        <item name="colorControlActivated">#1A1A1A</item>
     </style>
 
     <style name="HintTextLogin" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/login_text_color</item>
     </style>
 
     <style name="ThemeOverlay.AppTheme.PopupMenu" parent="ThemeOverlay.Material3.Dark">
