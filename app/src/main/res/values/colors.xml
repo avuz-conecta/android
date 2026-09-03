@@ -49,7 +49,6 @@
 
     <!-- Colors -->
     <color name="dark">#000000</color>
-    <color name="login_btn_tint">#ffffff</color>
     <color name="login_btn_stroke">#ffffff</color>
     <color name="bg_default">#FFFFFF</color>
     <color name="background_color_inverse">#000000</color>

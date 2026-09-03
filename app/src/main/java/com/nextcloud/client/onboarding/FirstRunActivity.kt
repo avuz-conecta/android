@@ -9,15 +9,21 @@ package com.nextcloud.client.onboarding
 
 import android.accounts.AccountManager
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.viewpager2.widget.ViewPager2
 import com.nextcloud.android.common.ui.theme.utils.ColorRole
 import com.nextcloud.client.account.UserAccountManager
@@ -86,6 +92,7 @@ class FirstRunActivity :
         setupSignupButton(MDMConfig.showIntro(this))
         setupHostOwnServerTextView(MDMConfig.showIntro(this))
         deleteAccountAtFirstLaunch()
+        themeOnboardingSlideForLightBackground()
         setupFeaturesViewAdapter()
         handleOnBackPressed()
     }
@@ -119,7 +126,6 @@ class FirstRunActivity :
     }
 
     private fun setupLoginButton() {
-        defaultViewThemeUtils?.material?.colorMaterialButtonFilledOnPrimary(binding.login)
         binding.login.setOnClickListener {
             if (intent.getBooleanExtra(EXTRA_ALLOW_CLOSE, false)) {
                 val authenticatorActivityIntent = getAuthenticatorActivityIntent(false)
@@ -169,6 +175,25 @@ class FirstRunActivity :
         if (onboarding?.isFirstRun == true) {
             userAccountManager?.removeAllAccounts()
         }
+    }
+
+    private fun themeOnboardingSlideForLightBackground() {
+        val slideTextColor = ContextCompat.getColor(this, R.color.login_text_color)
+        supportFragmentManager.registerFragmentLifecycleCallbacks(
+            object : FragmentManager.FragmentLifecycleCallbacks() {
+                override fun onFragmentViewCreated(
+                    fm: FragmentManager,
+                    f: Fragment,
+                    v: View,
+                    savedInstanceState: Bundle?
+                ) {
+                    v.findViewById<ImageView>(R.id.whatsNewImage)?.imageTintList =
+                        ColorStateList.valueOf(slideTextColor)
+                    v.findViewById<TextView>(R.id.whatsNewTitle)?.setTextColor(slideTextColor)
+                }
+            },
+            false
+        )
     }
 
     @Suppress("SpreadOperator")
@@ -248,7 +273,7 @@ class FirstRunActivity :
 
         val firstRun: Array<FeatureItem>
             get() = arrayOf(
-                FeatureItem(R.drawable.branded_login_logo, R.string.first_run_1_text, R.string.empty, true, false)
+                FeatureItem(R.drawable.ic_onboarding_folder, R.string.first_run_1_text, R.string.empty, true, false)
             )
     }
 }

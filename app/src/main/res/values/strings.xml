@@ -1026,7 +1026,7 @@
     <string name="login">Log in</string>
     <string name="signup_with_provider">Sign up with provider</string>
     <string name="host_your_own_server">Host your own server</string>
-    <string name="first_run_1_text">Keep your data secure and under your control</string>
+    <string name="first_run_1_text">Armazene, organize e compartilhe arquivos no Drive</string>
     <string name="first_run_2_text">Secure collaboration and file exchange</string>
     <string name="first_run_3_text">Easy-to-use webmail, calendar and contacts</string>
     <string name="first_run_4_text">Screensharing, online meetings and web conferences</string>
