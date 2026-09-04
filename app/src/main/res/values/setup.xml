@@ -65,16 +65,16 @@
     <!-- To fill if you want to show webviews instead of regular welcome views -->
     <array name="whatsnew_urls"></array>
 
-    <!-- Colors - Avuz Conecta Branding -->
-    <color name="primary">#2bb5e3</color>
-    <color name="primary_dark">#1e9bc7</color>
+    <!-- Colors - Avuz Conecta Branding (sourced from avuz-server apps/avuz_theme) -->
+    <color name="primary">#1c7fa0</color>
+    <color name="primary_dark">#166680</color>
     <color name="color_accent">#d2e314</color>
-    <color name="login_text_color">#1a1a1a</color>
-    <color name="login_text_hint_color">#b31a1a1a</color>
+    <color name="login_text_color">#333333</color>
+    <color name="login_text_hint_color">#aaaaaa</color>
     <color name="login_background">@color/bg_splash</color>
     <color name="login_btn_background">#000000</color>
     <color name="login_btn_text">#ffffff</color>
-    <color name="bg_splash">#f2f6fb</color>
+    <color name="bg_splash">#f1f1f1</color>
     <color name="bg_drawer_header">@color/bg_splash</color>
     <color name="drawer_header_icon_tint">@color/primary</color>
     <color name="drawer_header_text_color">@color/primary_dark</color>
