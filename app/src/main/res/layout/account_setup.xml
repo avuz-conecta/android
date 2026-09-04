@@ -53,6 +53,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/auth_host_url"
                     android:theme="@style/TextInputLayoutLogin"
+                    app:hintTextColor="@color/login_text_color"
+                    app:boxStrokeColor="@color/login_text_hint_color"
                     app:endIconContentDescription="@string/test_server_button"
                     app:endIconDrawable="@drawable/arrow_right"
                     app:endIconMode="custom"
