@@ -715,11 +715,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         accountSetupBinding.hostUrlInputHelperText.setText(
             String.format(getString(R.string.login_url_helper_text), getString(R.string.app_name)));
 
-        viewThemeUtils.platform.colorTextView(accountSetupBinding.hostUrlInputHelperText, ColorRole.ON_PRIMARY);
-        viewThemeUtils.platform.colorTextView(accountSetupBinding.serverStatusText, ColorRole.ON_PRIMARY);
-        viewThemeUtils.platform.colorTextView(accountSetupBinding.authStatusText, ColorRole.ON_PRIMARY);
-        viewThemeUtils.material.colorTextInputLayout(accountSetupBinding.hostUrlContainer, ColorRole.ON_PRIMARY);
-        viewThemeUtils.platform.colorEditTextOnPrimary(accountSetupBinding.hostUrlInput);
+        // Avuz: login screen is light-themed; keep the static dark-on-light colors from
+        // setup.xml/styles instead of recoloring these views to ON_PRIMARY (white).
 
         if (deviceInfo.hasCamera(this)) {
             accountSetupBinding.scanQr.setOnClickListener(v -> onScan());
