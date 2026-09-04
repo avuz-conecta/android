@@ -70,7 +70,7 @@
     <color name="primary_dark">#166680</color>
     <color name="color_accent">#d2e314</color>
     <color name="login_text_color">#333333</color>
-    <color name="login_text_hint_color">#aaaaaa</color>
+    <color name="login_text_hint_color">#808080</color>
     <color name="login_background">@color/bg_splash</color>
     <color name="login_btn_background">#000000</color>
     <color name="login_btn_text">#ffffff</color>

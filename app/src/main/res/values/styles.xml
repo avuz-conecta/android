@@ -131,6 +131,12 @@
         <item name="colorAccent">@color/login_text_hint_color</item>
         <item name="android:textColorHint">@color/login_text_hint_color</item>
         <item name="android:navigationBarColor">@color/login_background</item>
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="colorSurface">@color/login_background</item>
+        <item name="colorOnSurface">@color/login_text_color</item>
+        <item name="colorOnSurfaceVariant">@color/login_text_hint_color</item>
+        <item name="android:textColorPrimary">@color/login_text_color</item>
+        <item name="android:textColorSecondary">@color/login_text_hint_color</item>
     </style>
 
     <style name="Theme.ownCloud.noActionBar.Login" parent="Theme.ownCloud.noActionBar.LoginBase">
@@ -141,6 +147,11 @@
         <item name="android:windowBackground">@color/primary</item>
         <item name="android:navigationBarColor">@color/primary</item>
         <item name="android:windowLightNavigationBar">false</item>
+        <item name="colorSurface">@color/primary</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="colorOnSurfaceVariant">@color/white</item>
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white</item>
     </style>
 
     <style name="ownCloud.AlertDialog" parent="Theme.Material3.DayNight.Dialog.Alert">
@@ -357,6 +368,8 @@
     <style name="ThemeOverlay.App.Login.TextInputLayout" parent="">
         <item name="colorPrimary">@color/login_text_color</item>
         <item name="colorOnSurface">@color/login_text_color</item>
+        <item name="colorOnSurfaceVariant">@color/login_text_hint_color</item>
+        <item name="android:forceDarkAllowed">false</item>
         <item name="textAppearanceSubtitle1">@style/TextAppearance.Material3.BodyLarge</item>
         <item name="textAppearanceCaption">@style/TextAppearance.Material3.BodySmall</item>
         <item name="editTextStyle">@style/Widget.Material3.TextInputEditText.OutlinedBox</item>
