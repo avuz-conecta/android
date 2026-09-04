@@ -88,8 +88,8 @@
     <bool name="show_drawer_logout">false</bool>
 
     <!-- Drawer header branding dimensions -->
-    <dimen name="drawer_header_height">120dp</dimen>
-    <dimen name="drawer_header_logo_max_width">180dp</dimen>
+    <dimen name="drawer_header_height">130dp</dimen>
+    <dimen name="drawer_header_logo_max_width">200dp</dimen>
 
     <!-- Help, imprint and feedback, and other things -->
     <bool name="passcode_enabled">true</bool>
