@@ -10,14 +10,18 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Open folder (from Avuz "App Drive" glyph), centered in the adaptive safe zone -->
-    <group
-        android:scaleX="2.8"
-        android:scaleY="2.8"
-        android:translateX="18.7"
-        android:translateY="20.4">
-        <path
-            android:fillColor="#000000"
-            android:pathData="M19,20H4C2.89,20 2,19.11 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0 1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z"/>
-    </group>
+    <!-- White folder (rounded, with tab) — subtle outline so it reads on a white background -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:strokeColor="#C4CDD6"
+        android:strokeWidth="1.6"
+        android:pathData="M29,39 h13 a4,4 0 0 1 3.2,1.6 l3.6,4.8 a2,2 0 0 0 1.6,0.8 h30.6 a7,7 0 0 1 7,7 v26.2 a7,7 0 0 1 -7,7 h-52 a7,7 0 0 1 -7,-7 v-33.4 a7,7 0 0 1 7,-7 z"/>
+
+    <!-- Three brand dots inside the folder -->
+    <path android:fillColor="#2bb5e3"
+        android:pathData="M42,63 m-7,0 a7,7 0 1 1 14,0 a7,7 0 1 1 -14,0"/>
+    <path android:fillColor="#d2e314"
+        android:pathData="M55,63 m-7,0 a7,7 0 1 1 14,0 a7,7 0 1 1 -14,0"/>
+    <path android:fillColor="#d9d9d9"
+        android:pathData="M68,63 m-7,0 a7,7 0 1 1 14,0 a7,7 0 1 1 -14,0"/>
 </vector>
