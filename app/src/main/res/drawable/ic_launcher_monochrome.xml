@@ -10,8 +10,13 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- Folder silhouette (tab + body) -->
-    <path
-        android:fillColor="#000000"
-        android:pathData="M32,40 h16 l6,6 h22 a4,4 0 0 1 4,4 v4 h-52 v-10 a4,4 0 0 1 4,-4 z M30,50 h48 a4,4 0 0 1 4,4 v18 a4,4 0 0 1 -4,4 h-48 a4,4 0 0 1 -4,-4 v-18 a4,4 0 0 1 4,-4 z"/>
+    <group
+        android:scaleX="2.8"
+        android:scaleY="2.8"
+        android:translateX="18.7"
+        android:translateY="20.4">
+        <path
+            android:fillColor="#000000"
+            android:pathData="M19,20H4C2.89,20 2,19.11 2,18V6C2,4.89 2.89,4 4,4H10L12,6H19A2,2 0 0 1 21,8H21L4,8V18L6.14,10H23.21L20.93,18.5C20.7,19.37 19.92,20 19,20Z"/>
+    </group>
 </vector>
