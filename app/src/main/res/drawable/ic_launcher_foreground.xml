@@ -19,9 +19,9 @@
 
     <!-- Three brand dots inside the folder -->
     <path android:fillColor="#2bb5e3"
-        android:pathData="M38,64 m-7.5,0 a7.5,7.5 0 1 1 15,0 a7.5,7.5 0 1 1 -15,0"/>
+        android:pathData="M37,61 m-8,0 a8,8 0 1 1 16,0 a8,8 0 1 1 -16,0"/>
     <path android:fillColor="#d2e314"
-        android:pathData="M54,64 m-7.5,0 a7.5,7.5 0 1 1 15,0 a7.5,7.5 0 1 1 -15,0"/>
+        android:pathData="M54,61 m-8,0 a8,8 0 1 1 16,0 a8,8 0 1 1 -16,0"/>
     <path android:fillColor="#c9ced3"
-        android:pathData="M70,64 m-7.5,0 a7.5,7.5 0 1 1 15,0 a7.5,7.5 0 1 1 -15,0"/>
+        android:pathData="M71,61 m-8,0 a8,8 0 1 1 16,0 a8,8 0 1 1 -16,0"/>
 </vector>
