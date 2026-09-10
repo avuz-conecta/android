@@ -16,10 +16,10 @@
     <ImageView
         android:id="@+id/whatsNewImage"
         android:layout_width="@dimen/splash_image_size"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/alternate_margin"
-        android:layout_weight="60"
+        android:layout_marginBottom="@dimen/standard_half_margin"
         android:contentDescription="@string/what_s_new_image"
         />
 
@@ -36,8 +36,7 @@
         android:gravity="center"
         android:text=""
         android:textAppearance="@style/NextcloudTextAppearanceHeadline"
-        android:textColor="@color/text_color_inverse"
-        android:textStyle="bold"/>
+        android:textColor="@color/text_color_inverse"/>
 
     <LinearLayout
         android:id="@+id/whatsNewTextLayout"

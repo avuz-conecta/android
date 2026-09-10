@@ -11,12 +11,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:orientation="vertical"
         android:layout_marginBottom="@dimen/standard_margin"
         android:layout_marginTop="@dimen/standard_margin">
@@ -24,8 +24,7 @@
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/contentPanel"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             tools:ignore="NestedWeights" />
 
         <com.owncloud.android.ui.whatsnew.ProgressIndicator

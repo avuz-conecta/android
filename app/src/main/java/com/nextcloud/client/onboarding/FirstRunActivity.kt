@@ -237,18 +237,10 @@ class FirstRunActivity :
     private fun setSlideshowSize(isLandscape: Boolean) {
         binding.buttonLayout.orientation = if (isLandscape) LinearLayout.HORIZONTAL else LinearLayout.VERTICAL
 
-        val layoutParams: LinearLayout.LayoutParams = if (MDMConfig.showIntro(this)) {
-            LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-            )
-        } else {
-            @Suppress("MagicNumber")
-            LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.MATCH_PARENT,
-                DisplayUtils.convertDpToPixel(if (isLandscape) 100f else 150f, this)
-            )
-        }
+        val layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
 
         binding.bottomLayout.layoutParams = layoutParams
     }
@@ -273,7 +265,7 @@ class FirstRunActivity :
 
         val firstRun: Array<FeatureItem>
             get() = arrayOf(
-                FeatureItem(R.drawable.ic_onboarding_folder, R.string.onboarding_title, R.string.empty, true, false)
+                FeatureItem(R.drawable.avuz_onboarding_folder, R.string.onboarding_title, R.string.empty, true, false)
             )
     }
 }
