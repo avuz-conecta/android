@@ -17,11 +17,9 @@
         android:translateX="9.72"
         android:translateY="3.57">
 
-        <!-- Folder (rounded, with tab) — taller proportion so it isn't stretched -->
+        <!-- Solid white folder on the black ground -->
         <path
             android:fillColor="#FFFFFF"
-            android:strokeColor="#B7C2CD"
-            android:strokeWidth="2.4"
             android:pathData="M32,34 h12 a5,5 0 0 1 3.9,1.9 l3.7,4.9 a3,3 0 0 0 2.4,1.2 h21.9 a8,8 0 0 1 8,8 v31 a8,8 0 0 1 -8,8 h-43.8 a8,8 0 0 1 -8,-8 v-39 a8,8 0 0 1 8,-8 z"/>
 
         <!-- Three brand dots as an accent inside the folder -->
