@@ -6,4 +6,4 @@
 -->
 <inset xmlns:android="http://schemas.android.com/apk/res/android"
     android:drawable="@drawable/ic_avuz_app"
-    android:inset="12%" />
+    android:inset="20%" />
