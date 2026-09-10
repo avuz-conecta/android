@@ -15,7 +15,7 @@
 
     <ImageView
         android:id="@+id/whatsNewImage"
-        android:layout_width="@dimen/splash_image_size"
+        android:layout_width="@dimen/onboarding_image_size"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
         android:layout_gravity="center_horizontal"
@@ -36,7 +36,8 @@
         android:gravity="center"
         android:text=""
         android:textAppearance="@style/NextcloudTextAppearanceHeadline"
-        android:textColor="@color/text_color_inverse"/>
+        android:textColor="@color/text_color_inverse"
+        android:textSize="@dimen/onboarding_title_size"/>
 
     <LinearLayout
         android:id="@+id/whatsNewTextLayout"
