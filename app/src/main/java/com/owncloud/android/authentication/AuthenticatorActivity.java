@@ -330,6 +330,8 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
             accountSetupBinding = AccountSetupBinding.inflate(getLayoutInflater());
             setContentView(accountSetupBinding.getRoot());
 
+            applyImeInsetsToLogin();
+
             /// initialize general UI elements
             initOverallUi();
 
@@ -346,6 +348,16 @@ public class AuthenticatorActivity extends AccountAuthenticatorActivity
         }
 
         ProcessLifecycleOwner.get().getLifecycle().addObserver(lifecycleEventObserver);
+    }
+
+    private void applyImeInsetsToLogin() {
+        accountSetupBinding.scroll.setClipToPadding(false);
+        ViewCompat.setOnApplyWindowInsetsListener(accountSetupBinding.scroll, (view, windowInsets) -> {
+            Insets bars = windowInsets.getInsets(WindowInsetsCompat.Type.systemBars());
+            Insets ime = windowInsets.getInsets(WindowInsetsCompat.Type.ime());
+            view.setPadding(view.getPaddingLeft(), bars.top, view.getPaddingRight(), Math.max(bars.bottom, ime.bottom));
+            return windowInsets;
+        });
     }
 
     private void showEnforcedServers() {
