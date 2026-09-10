@@ -29,7 +29,7 @@
             android:pathData="M39,65 m-6.5,0 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0"/>
         <path android:fillColor="#d2e314"
             android:pathData="M54,65 m-6.5,0 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0"/>
-        <path android:fillColor="#c9ced3"
+        <path android:fillColor="#949ca3"
             android:pathData="M69,65 m-6.5,0 a6.5,6.5 0 1 1 13,0 a6.5,6.5 0 1 1 -13,0"/>
     </group>
 </vector>
