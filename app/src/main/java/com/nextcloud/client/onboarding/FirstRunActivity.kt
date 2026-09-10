@@ -9,8 +9,8 @@ package com.nextcloud.client.onboarding
 
 import android.accounts.AccountManager
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.content.res.Configuration
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -187,8 +187,8 @@ class FirstRunActivity :
                     v: View,
                     savedInstanceState: Bundle?
                 ) {
-                    v.findViewById<ImageView>(R.id.whatsNewImage)?.imageTintList =
-                        ColorStateList.valueOf(slideTextColor)
+                    v.findViewById<ImageView>(R.id.whatsNewImage)
+                        ?.setColorFilter(slideTextColor, PorterDuff.Mode.SRC_IN)
                     v.findViewById<TextView>(R.id.whatsNewTitle)?.setTextColor(slideTextColor)
                 }
             },
@@ -273,7 +273,7 @@ class FirstRunActivity :
 
         val firstRun: Array<FeatureItem>
             get() = arrayOf(
-                FeatureItem(R.drawable.ic_onboarding_folder, R.string.first_run_1_text, R.string.empty, true, false)
+                FeatureItem(R.drawable.ic_onboarding_folder, R.string.onboarding_title, R.string.empty, true, false)
             )
     }
 }

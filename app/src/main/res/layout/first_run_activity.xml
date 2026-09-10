@@ -62,9 +62,11 @@
                 android:layout_gravity="center"
                 android:maxWidth="400dp"
                 android:minWidth="300dp"
+                android:textColor="@color/login_btn_text"
                 android:textStyle="bold"
                 android:text="@string/login"
                 android:padding="@dimen/standard_padding"
+                app:backgroundTint="@color/login_btn_background"
                 app:cornerRadius="@dimen/button_corner_radius" />
 
             <com.google.android.material.button.MaterialButton
