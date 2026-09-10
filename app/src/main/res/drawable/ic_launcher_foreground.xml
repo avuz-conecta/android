@@ -12,10 +12,10 @@
 
     <!-- Scaled to sit inside the adaptive circle mask (safe zone) -->
     <group
-        android:scaleX="0.78"
-        android:scaleY="0.78"
-        android:translateX="11.88"
-        android:translateY="11.88">
+        android:scaleX="0.82"
+        android:scaleY="0.82"
+        android:translateX="9.72"
+        android:translateY="3.57">
 
         <!-- Folder (rounded, with tab), tinted light so it reads on white; bold outline -->
         <path
