@@ -61,7 +61,7 @@ configurations.configureEach {
 // semantic versioning for version code
 val versionMajor = 34
 val versionMinor = 1
-val versionPatch = 1
+val versionPatch = 2
 val versionBuild = 90 // 0-50=Alpha / 51-98=RC / 90-99=stable
 
 val ndkEnv = buildMap {

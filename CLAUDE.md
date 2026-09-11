@@ -193,8 +193,8 @@ android/
 
 ## Current Version
 
-- Version: 34.1.1
-- Version Code: 340010190
+- Version: 34.1.2
+- Version Code: 340010290
 
 ## License
 
