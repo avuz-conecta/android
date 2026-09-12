@@ -21,6 +21,8 @@
         android:gravity="center"
         android:textColor="@color/login_text_color"
         android:textSize="@dimen/splash_text_size"
+        android:layout_marginStart="@dimen/standard_margin"
+        android:layout_marginEnd="@dimen/standard_margin"
         android:layout_marginBottom="@dimen/standard_double_margin"
         android:layout_height="wrap_content"/>
 
