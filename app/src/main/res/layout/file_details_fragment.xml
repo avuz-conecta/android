@@ -44,6 +44,7 @@
                 android:id="@+id/filedetails"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/standard_quarter_margin"
                 android:gravity="center"
                 android:orientation="horizontal">
 
